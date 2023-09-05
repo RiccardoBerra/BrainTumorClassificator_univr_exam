@@ -10,6 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
 
 # Initialing compute device (use GPU if available).
+print("Neural Network")
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 print(device)

@@ -1,6 +1,28 @@
 # UNIVR-MachineLearning-Exam
 This repo was created to support "Machine Learning &amp; Artificial Intelligence" exam.
 
+In this code i'm using a [Brain Tumor dataset](https://www.kaggle.com/datasets/jakeshbohaju/brain-tumor) for trying some of the classical machine learning alghoritms. 
+- KNN with differents K
+- SVM with differents Kernels
+- A neural network
+
+In order to run the code you need to download the dataset and extract into the code folder.
+The codespace need to look like that:
+
+
+* UNIVR-MachineLearning-Exam:
+  * dataset/
+    * Brain Tumor/ 
+      * all the images are here
+    * Brain Tumor.csv
+    * bt_dataset_t3.csv
+   
+  * README.md
+  * .gitignore
+  * requirements.txt
+  * NeuralNetwork.py
+  * main.py
+  
 
 ---------------------------------------------------
 KNN
@@ -17,7 +39,7 @@ KNN
 
 EVALUATION ON TESTING DATA
 
-                precision    recall  f1-score   support
+                precision    recall    f1-score   support
 
            0       0.95      0.94      0.95       526
            1       0.93      0.94      0.93       415

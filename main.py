@@ -10,6 +10,7 @@ import cv2
 import glob
 
 
+
 def knn(trainData, valData, trainLabels, valLabels, testLabels) -> None:
     kVals = range(1, 10, 2)
     accuracies = []
@@ -96,6 +97,7 @@ if __name__ == '__main__':
     (trainData, valData, trainLabels, valLabels) = train_test_split(trainData, trainLabels,
                                                                     test_size=0.1, random_state=84)
 
-    knn(trainData, valData, trainLabels, valLabels, testLabels)
-
+    #knn(trainData, valData, trainLabels, valLabels, testLabels)
     #svm(trainData, testData, trainLabels, testLabels)
+
+
