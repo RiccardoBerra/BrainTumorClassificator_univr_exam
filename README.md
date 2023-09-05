@@ -10,18 +10,18 @@ In order to run the code you need to download the dataset and extract into the c
 The codespace need to look like that:
 
 
-* UNIVR-MachineLearning-Exam:
-  * dataset/
-    * Brain Tumor/ 
-      * all the images are here
-    * Brain Tumor.csv
-    * bt_dataset_t3.csv
-   
-  * README.md
-  * .gitignore
-  * requirements.txt
-  * NeuralNetwork.py
-  * main.py
+    UNIVR-MachineLearning-Exam:
+    |- dataset/
+    |        |- Brain Tumor/ 
+    |                     |- all the images are here
+    |        |- Brain Tumor.csv
+    |        |- bt_dataset_t3.csv
+    |
+    |- README.md
+    |- .gitignore
+    |- requirements.txt
+    |- NeuralNetwork.py
+    |- main.py
   
 
 ---------------------------------------------------
