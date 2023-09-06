@@ -7,7 +7,7 @@ In this code i'm using a [Brain Tumor dataset](https://www.kaggle.com/datasets/j
 - PCA + KNN
 - SVM with differents Kernels
 - PCA + SVM
-- A neural network
+- A neural network (CNN)
 
 In order to run the code you need to download the dataset and extract into the code folder.
 The codespace need to look like that:
@@ -89,9 +89,9 @@ SVM
 
 - Linear
 
-  - The model is 87.67268862911796% accurate
-  - Precision: 0.8405466970387244
-  - Recall: 0.8891566265060241
+  - The model is 87.672% accurate
+  - Precision: 0.840
+  - Recall: 0.889
               
                       precision   recall    f1-score   support
 
@@ -103,9 +103,9 @@ SVM
         weighted avg    0.88      0.88      0.88       941
 
 - Poly 
-  - The model is 90.54197662061637% accurate
-  - Precision: 0.8790697674418605
-  - Recall: 0.9108433734939759
+  - The model is 90.541% accurate
+  - Precision: 0.879
+  - Recall: 0.910
   
                       precision   recall    f1-score   support
 
@@ -117,9 +117,9 @@ SVM
         weighted avg    0.91      0.91      0.91       941
 
 - RBF 
-  - The model is 90.43570669500531% accurate
-  - Precision: 0.9012345679012346
-  - Recall: 0.8795180722891566
+  - The model is 90.435% accurate
+  - Precision: 0.901
+  - Recall: 0.879
               
                       precision   recall    f1-score   support
 
@@ -138,8 +138,8 @@ number of components for PCA = 3
 - EVALUATION ON VALIDATION DATA
 - Linear 
 
-  - The model is 36.74911660777385% accurate
-  - Precision: 0.33986928104575165
+  - The model is 36.749% accurate
+  - Precision: 0.339
   - Recall: 0.4
   
                      precision    recall    f1-score   support
@@ -153,9 +153,9 @@ number of components for PCA = 3
 
 - Poly 
 
-  - The model is 75.97173144876325% accurate
-  - Precision: 0.6845238095238095
-  - Recall: 0.8846153846153846
+  - The model is 75.971% accurate
+  - Precision: 0.684
+  - Recall: 0.884
   
                    precision    recall    f1-score   support
 
@@ -167,9 +167,9 @@ number of components for PCA = 3
         weighted avg  0.78      0.76      0.76       283
 
 - RBF
-  - The model is 84.45229681978799% accurate
-  - Precision: 0.8307692307692308
-  - Recall: 0.8307692307692308
+  - The model is 84.452% accurate
+  - Precision: 0.830
+  - Recall: 0.830
   
                    precision    recall    f1-score   support
 
@@ -180,3 +180,26 @@ number of components for PCA = 3
         macro avg     0.84      0.84      0.84       283
         weighted avg  0.84      0.84      0.84       283
 
+
+---------------------------------------------------
+CNN
+---------------------------------------------------
+
+Neural Network 
+
+cuda:0 - RTX 3070 ti
+
+  - Train Shape : (2821, 240, 240)
+  - Test Shape(941, 240, 240)
+
+  Epoch: 0. Loss: 0.17119424045085907. | Accuracy (on trainset/self): 0.597305919886565
+
+  Epoch: 20. Loss: 0.034545473754405975. Accuracy (on trainset/self): 0.8876285005317264
+
+  Epoch: 40. Loss: 0.07476810365915298. Accuracy (on trainset/self): 0.924140375753279
+
+  Epoch: 60. Loss: 0.010155437514185905. Accuracy (on trainset/self): 0.9748316199929103
+
+  Epoch: 80. Loss: 0.00015918380813673139. Accuracy (on trainset/self): 0.9911378943637008
+
+  Accuracy on test set: 0.9436769394261424

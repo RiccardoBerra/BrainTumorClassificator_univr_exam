@@ -18,6 +18,7 @@ from sklearn.decomposition import PCA
 
 
 def knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels) -> None:
+
     kVals = range(1, 10, 2)
     accuracies = []
     # loop over various values of `k` for the k-Nearest Neighbor classifier
@@ -25,7 +26,6 @@ def knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels) -> None:
         # train the k-Nearest Neighbor classifier with the current value of `k`
         model = KNeighborsClassifier(n_neighbors=k)
         model.fit(x_train, y_train)
-
         # evaluate the model and update the accuracies list
         score = model.score(x_valData, y_vallabels)
         print("k=%d, accuracy=%.2f%%" % (k, score * 100))
@@ -40,18 +40,6 @@ def knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels) -> None:
     model.fit(x_train, y_train)
     predictions = model.predict(x_test)
 
-    '''
-    fig = px.scatter(
-        testData, x=0, y=1,
-        color=predictions, color_continuous_scale='RdBu',
-        symbol=testLabels, symbol_map={'0': 'square-dot', '1': 'circle-dot'},
-        labels={'symbol': 'label', 'color': 'score of <br>first class'}
-    )
-    fig.update_traces(marker_size=12, marker_line_width=1.5)
-    fig.update_layout(legend_orientation='h')
-    fig.show()
-
-    '''
     print("EVALUATION ON TESTING DATA")
     print(classification_report(y_test, predictions))
 
@@ -59,13 +47,14 @@ def knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels) -> None:
         # grab the image and classify it
         image = x_test[i]
         prediction = model.predict(image.reshape(1, -1))[0]
-
         image = image.reshape((240, 240)).astype("uint8")
 
         # show the prediction
         print("Has Brain tumor: {}  Test Labels : {}".format(prediction, y_test[i]))
         cv2.imshow("Image ", image)
         cv2.waitKey(0)
+
+
 def svm(x_train, x_test, y_train, y_test) -> None:
     # Creating a support vector classifier
     max_iteration = 100
@@ -76,7 +65,6 @@ def svm(x_train, x_test, y_train, y_test) -> None:
         print('----', kernel, '----')
         model = svm.SVC(kernel=kernel, max_iter=max_iteration)
         model.fit(x_train, y_train)
-
         y_pred = model.predict(x_test)
 
         # Calculating the accuracy of the model ------- TEST DATA
@@ -88,11 +76,12 @@ def svm(x_train, x_test, y_train, y_test) -> None:
         print("Precision:", precision_score(y_test, y_pred))
         print("Recall:", recall_score(y_test, y_pred))
         print(classification_report(y_test, y_pred, target_names=['Non tumor', 'Tumor']))
+
+
 def knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components) -> None:
     # Addestra la PCA sui dati di addestramento
     pca = PCA(n_components=n_components)
     pca.fit(x_train)
-
     # Applica la PCA ai dati di addestramento, validazione e test
     trainData_pca = pca.transform(x_train)
     valData_pca = pca.transform(x_valData)
@@ -125,11 +114,9 @@ def knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_com
         image = testData_pca[i]
         prediction = model.predict(image.reshape(1, -1))[0]
 
-        #image = image.reshape((240, 240)).astype("uint8")
-
         print("Has Brain tumor: {}  Test Labels : {}".format(prediction, y_test[i]))
-        #cv2.imshow("Image ", image)
-        #cv2.waitKey(0)
+
+
 def svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components) -> None:
     pca = PCA(n_components=n_components)
     pca.fit(x_train)
@@ -149,16 +136,16 @@ def svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_com
         model.fit(trainData_pca, y_train)
 
         y_pred = model.predict(valData_pca)
-
         # Calculating the accuracy of the model  ------- VALIDATION DATA
         accuracy = accuracy_score(y_pred, y_vallabels)
-
         # Print the accuracy of the model
         print("EVALUATION ON VALIDATION DATA")
         print(f"The model is {accuracy * 100}% accurate")
         print("Precision:", precision_score(y_vallabels, y_pred))
         print("Recall:", recall_score(y_vallabels, y_pred))
         print(classification_report(y_vallabels, y_pred, target_names=['Non tumor', 'Tumor']))
+
+
 def pca(x_train,x_test, y_train, y_test, n_components) -> None:
     pca = PCA(n_components)  # Scegli il numero di componenti principali da visualizzare
     x_train_pca = pca.fit_transform(x_train)  # Applica la PCA ai dati di addestramento
@@ -188,8 +175,8 @@ if __name__ == '__main__':
     brain_tumor = pd.read_csv(f'dataset/Brain Tumor.csv')
     class_brain_tumor = brain_tumor.loc[:, ['Class']]
     target = class_brain_tumor['Class'].values
-
     image_data = []
+
     for name in sorted(glob.glob('dataset/Brain Tumor/*'), key=len):
         im = cv2.imread(name)
         im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY).flatten()
@@ -205,8 +192,8 @@ if __name__ == '__main__':
                                                                     test_size=0.1, random_state=84)
 
 
-    #knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels)
-    #svm(x_train, x_test, y_train, y_test)
-    #pca(x_train, x_valData, y_train, y_vallabels, n_components=100)
+    knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels)
+    svm(x_train, x_test, y_train, y_test)
+    pca(x_train, x_valData, y_train, y_vallabels, n_components=100)
     knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=2)
     svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=3)
