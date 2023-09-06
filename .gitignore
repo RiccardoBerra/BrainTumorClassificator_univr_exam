@@ -8,3 +8,4 @@ output
 .idea
 SVMGIGI.py
 NNGIGI.py
+model_weights.pth

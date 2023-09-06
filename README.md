@@ -185,21 +185,23 @@ number of components for PCA = 3
 CNN
 ---------------------------------------------------
 
-Neural Network 
+Neural Network CNN
 
 cuda:0 - RTX 3070 ti
 
   - Train Shape : (2821, 240, 240)
   - Test Shape(941, 240, 240)
 
-  Epoch: 0. Loss: 0.17119424045085907. | Accuracy (on trainset/self): 0.597305919886565
+Epoch: 0. Loss: 0.6297327280044556. | Accuracy (on trainset/self): 0.5721375398794754
 
-  Epoch: 20. Loss: 0.034545473754405975. Accuracy (on trainset/self): 0.8876285005317264
+Epoch: 20. Loss: 0.15023057162761688. | Accuracy (on trainset/self): 0.8780574264445232
 
-  Epoch: 40. Loss: 0.07476810365915298. Accuracy (on trainset/self): 0.924140375753279
+Epoch: 40. Loss: 0.033843349665403366. | Accuracy (on trainset/self): 0.8826657213753988
 
-  Epoch: 60. Loss: 0.010155437514185905. Accuracy (on trainset/self): 0.9748316199929103
+Epoch: 60. Loss: 0.1481020152568817. | Accuracy (on trainset/self): 0.9613612194257356
 
-  Epoch: 80. Loss: 0.00015918380813673139. Accuracy (on trainset/self): 0.9911378943637008
+Epoch: 80. Loss: 0.04397234693169594. | Accuracy (on trainset/self): 0.9188231123714995
 
-  Accuracy on test set: 0.9436769394261424
+Accuracy on test set: 0.9415515409139213
+
+![Alt text](plot/Training.png?raw=true "Title")

@@ -1,22 +1,15 @@
 import torch
 import pandas as pd
-import cv2
-import glob
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, recall_score, precision_score, classification_report
 import cv2
 import glob
-import plotly.express as px
 import numpy as np
 import torch.nn as nn
-import torchvision.models as models
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-from torchvision.datasets import MNIST
-from torch.utils.data import TensorDataset, DataLoader
-from sklearn.preprocessing import StandardScaler
+from torch.utils.data import TensorDataset
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+import matplotlib.pyplot as plt
 
 # Initialing compute device (use GPU if available).
 print("Neural Network")
@@ -112,11 +105,16 @@ model = CNN().to(device)
 loss_fn = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=1e-3, momentum=0.9)
 
+losses = []
+accuracies = []
+
 num_epochs = 100
 for epoch in range(num_epochs):
     model.train()  # Imposta il modello in modalità di training.
     predictions = []
     ground_truth = []
+    total_loss = 0.0
+
     for images, labels in train_dataloader:  # Itera attraverso i batch dei dati di addestramento.
         images, labels = images.to(device), labels.to(device)  # Sposta i dati su GPU se disponibile.
         images = images.float()  # Converti l'input in tipo "float"
@@ -134,9 +132,13 @@ for epoch in range(num_epochs):
         _, predicted = torch.max(outputs.data, 1)
         predictions.extend(predicted.detach().cpu().numpy().flatten().tolist())
         ground_truth.extend(labels.detach().cpu().numpy().flatten().tolist())
+        total_loss += loss.item()
 
+    average_loss = total_loss / len(train_dataloader)
+    losses.append(average_loss)
     if epoch % 20 == 0:
       accuracy = accuracy_score(ground_truth, predictions)
+      accuracies.append(accuracy)
       print('Epoch: {}. Loss: {}. Accuracy (on trainset/self): {}'.format(epoch, loss.item(), accuracy))
 
 model.eval()  # Imposta il modello in modalità di valutazione.
@@ -155,6 +157,27 @@ with torch.no_grad():  # Disabilita il calcolo dei gradienti durante la valutazi
         predictions.extend(predicted.cpu().numpy())
         ground_truth.extend(labels.cpu().numpy())
 
+
+
+torch.save(model.state_dict(), 'model_weights.pth')
 accuracy = accuracy_score(ground_truth, predictions)
 print('Accuracy on test set:', accuracy)
+print(confusion_matrix(ground_truth, predictions))
 
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 2, 1)
+plt.plot(range(len(losses)), losses, label='Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(range(0, num_epochs, 20), accuracies, label='Accuracy', marker='o')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training Accuracy')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
