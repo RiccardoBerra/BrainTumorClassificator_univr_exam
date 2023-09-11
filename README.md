@@ -26,6 +26,9 @@ The codespace need to look like that:
     |- NeuralNetwork.py
     |- main.py
   
+
+![Alt text](plot/NoTumor.jpg?raw=true "No tumor" ) ![Alt text](plot/Tumor.jpg?raw=true "Tumor")
+
 ---------------------------------------------------
 PCA
 ---------------------------------------------------
@@ -192,16 +195,27 @@ cuda:0 - RTX 3070 ti
   - Train Shape : (2821, 240, 240)
   - Test Shape(941, 240, 240)
 
-Epoch: 0. Loss: 0.6297327280044556. | Accuracy (on trainset/self): 0.5721375398794754
+Epoch: 0. Loss: 0.18476. | Accuracy (on trainset/self): 0.58099
 
-Epoch: 20. Loss: 0.15023057162761688. | Accuracy (on trainset/self): 0.8780574264445232
+Epoch: 20. Loss: 0.14416. | Accuracy (on trainset/self): 0.87593
 
-Epoch: 40. Loss: 0.033843349665403366. | Accuracy (on trainset/self): 0.8826657213753988
+Epoch: 40. Loss: 0.01653. | Accuracy (on trainset/self): 0.93583
 
-Epoch: 60. Loss: 0.1481020152568817. | Accuracy (on trainset/self): 0.9613612194257356
+Epoch: 60. Loss: 0.08495. | Accuracy (on trainset/self): 0.96490
 
-Epoch: 80. Loss: 0.04397234693169594. | Accuracy (on trainset/self): 0.9188231123714995
+Epoch: 80. Loss: 0.02391. | Accuracy (on trainset/self): 0.99397
 
-Accuracy on test set: 0.9415515409139213
+Accuracy on test set: 0.95324
+
+
+                    Negative      Positive
+
+        Negative      508 (TN)      18 (FP)
+
+        Positive      26 (FN)       389 (TP)
+
+Precision : 0.955
+
+Recall : 0.937
 
 ![Alt text](plot/Training.png?raw=true "Title")

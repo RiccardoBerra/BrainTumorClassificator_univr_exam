@@ -159,7 +159,7 @@ with torch.no_grad():  # Disabilita il calcolo dei gradienti durante la valutazi
 
 
 
-torch.save(model.state_dict(), 'model_weights.pth')
+torch.save(model.state_dict(), 'model_weights_o.pth')
 accuracy = accuracy_score(ground_truth, predictions)
 print('Accuracy on test set:', accuracy)
 print(confusion_matrix(ground_truth, predictions))
