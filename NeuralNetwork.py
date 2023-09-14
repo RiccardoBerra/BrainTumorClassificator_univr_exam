@@ -72,7 +72,8 @@ class CNN(nn.Module):
         # Fully connected layers.
         self.fc1 = nn.Linear(189728, 128) #TODO: Check here
         #self.fc1 = nn.Linear(32 * 6 * 6, 128)
-        self.fc2 = nn.Linear(128, 10)
+        #self.fc2 = nn.Linear(128, 10)
+        self.fc2 = nn.Linear(128, 2)
 
         # Dropout.
         self.dropout2d = nn.Dropout2d(p=0.1)
@@ -110,24 +111,24 @@ accuracies = []
 
 num_epochs = 100
 for epoch in range(num_epochs):
-    model.train()  # Imposta il modello in modalità di training.
+    model.train()  # Model in training mode.
     predictions = []
     ground_truth = []
     total_loss = 0.0
 
-    for images, labels in train_dataloader:  # Itera attraverso i batch dei dati di addestramento.
-        images, labels = images.to(device), labels.to(device)  # Sposta i dati su GPU se disponibile.
-        images = images.float()  # Converti l'input in tipo "float"
+    for images, labels in train_dataloader:  # iter through training batch.
+        images, labels = images.to(device), labels.to(device)  # Move data on GPU
+        images = images.float()
 
-        optimizer.zero_grad()  # Azzera i gradienti accumulati dai passaggi precedenti.
+        optimizer.zero_grad()  # past gradients to zero.
 
-        outputs = model(images)  # Esegui l'inoltro dei dati attraverso il modello.
+        outputs = model(images)
 
-        loss = loss_fn(outputs, labels)  # Calcola la loss.
+        loss = loss_fn(outputs, labels)
 
-        loss.backward()  # Calcola i gradienti.
+        loss.backward()  # calculate gradients.
 
-        optimizer.step()  # Aggiorna i pesi del modello.
+        optimizer.step()  # update weights
 
         _, predicted = torch.max(outputs.data, 1)
         predictions.extend(predicted.detach().cpu().numpy().flatten().tolist())
@@ -141,15 +142,15 @@ for epoch in range(num_epochs):
       accuracies.append(accuracy)
       print('Epoch: {}. Loss: {}. Accuracy (on trainset/self): {}'.format(epoch, loss.item(), accuracy))
 
-model.eval()  # Imposta il modello in modalità di valutazione.
+model.eval()  #model in evaluation mode.
 
 predictions = []
 ground_truth = []
 
-with torch.no_grad():  # Disabilita il calcolo dei gradienti durante la valutazione.
+with torch.no_grad():  #no gradients evaluation during eval mode
     for images, labels in test_dataloader:
         images, labels = images.to(device), labels.to(device)
-        images = images.float()  # Converti l'input in tipo "float"
+        images = images.float()
         outputs = model(images)
 
         _, predicted = torch.max(outputs.data, 1)

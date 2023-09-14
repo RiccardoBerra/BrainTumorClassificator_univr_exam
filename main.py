@@ -5,7 +5,7 @@ from scipy.spatial.distance import cdist
 from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, recall_score, precision_score, classification_report
+from sklearn.metrics import accuracy_score, recall_score, precision_score, classification_report, confusion_matrix
 import cv2
 import glob
 import plotly.express as px
@@ -15,6 +15,7 @@ import seaborn as sns
 from sklearn import svm
 
 from sklearn.decomposition import PCA
+import time
 
 
 def knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels) -> None:
@@ -41,8 +42,10 @@ def knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels) -> None:
     predictions = model.predict(x_test)
 
     print("EVALUATION ON TESTING DATA")
+    print(accuracy_score(y_test,predictions))
     print(classification_report(y_test, predictions))
-
+    print(confusion_matrix(y_test,predictions))
+'''
     for i in list(map(int, np.random.randint(0, high=len(y_test), size=(1,)))):
         # grab the image and classify it
         image = x_test[i]
@@ -54,30 +57,7 @@ def knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels) -> None:
         cv2.imshow("Image ", image)
         cv2.waitKey(0)
 
-
-def svm(x_train, x_test, y_train, y_test) -> None:
-    # Creating a support vector classifier
-    max_iteration = 100
-
-    kernels = ['linear', 'poly', 'rbf']
-    for kernel in kernels:
-        from sklearn import svm
-        print('----', kernel, '----')
-        model = svm.SVC(kernel=kernel, max_iter=max_iteration)
-        model.fit(x_train, y_train)
-        y_pred = model.predict(x_test)
-
-        # Calculating the accuracy of the model ------- TEST DATA
-        accuracy = accuracy_score(y_pred, y_test)
-
-        # Print the accuracy of the model
-        print("EVALUATION ON TEST DATA")
-        print(f"The model is {accuracy * 100}% accurate")
-        print("Precision:", precision_score(y_test, y_pred))
-        print("Recall:", recall_score(y_test, y_pred))
-        print(classification_report(y_test, y_pred, target_names=['Non tumor', 'Tumor']))
-
-
+'''
 def knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components) -> None:
     # Addestra la PCA sui dati di addestramento
     pca = PCA(n_components=n_components)
@@ -107,7 +87,20 @@ def knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_com
     predictions = model.predict(testData_pca)
 
     print("EVALUATION ON TESTING DATA")
+    print(accuracy_score(y_test,predictions))
     print(classification_report(y_test, predictions))
+    print(confusion_matrix(y_test,predictions))
+'''
+    # Plot the data points in 2D PCA space
+    plt.figure(figsize=(10, 6))
+    plt.scatter(trainData_pca[:, 0], trainData_pca[:, 1], c=y_train, cmap='viridis', label='Train Data')
+    plt.scatter(testData_pca[:, 0], testData_pca[:, 1], c=y_test, cmap='viridis', marker='x', label='Test Data')
+    plt.xlabel('PCA Component 1')
+    plt.ylabel('PCA Component 2')
+    plt.title('PCA Components 1 vs 2')
+    plt.legend(loc='best')
+    plt.show()
+
 
     for i in list(map(int, np.random.randint(0, high=len(y_test), size=(50,)))):
         #model want as input only testdata as same size as PCA transformation
@@ -116,7 +109,46 @@ def knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_com
 
         print("Has Brain tumor: {}  Test Labels : {}".format(prediction, y_test[i]))
 
+'''
+def svm(x_train, x_test, y_train, y_test) -> None:
+    # Creating a support vector classifier
+    x_train, x_test, y_train, y_test = np.array(x_train), np.array(x_test), np.array(y_train), np.array(y_test)
+    max_iteration = 100
 
+
+    kernels = ['linear', 'poly', 'rbf']
+    for kernel in kernels:
+        start_time2 = time.time()
+
+        from sklearn import svm
+        print('----', kernel, '----')
+        model = svm.SVC(kernel=kernel, max_iter=max_iteration)
+        model.fit(x_train, y_train)
+        '''
+        y_pred = model.predict(valData_pca)
+        # Calculating the accuracy of the model  ------- VALIDATION DATA
+        accuracy = accuracy_score(y_pred, y_vallabels)
+        # Print the accuracy of the model
+        print("EVALUATION ON VALIDATION DATA")
+        print(f"The model is {accuracy * 100}% accurate")
+        print("Precision:", precision_score(y_vallabels, y_pred))
+        print("Recall:", recall_score(y_vallabels, y_pred))
+        print(classification_report(y_vallabels, y_pred, target_names=['Non tumor', 'Tumor']))
+        '''
+        y_pred = model.predict(x_test)
+        # Calculating the accuracy of the model  ------- VALIDATION DATA
+        accuracy = accuracy_score(y_pred, y_test)
+        # Print the accuracy of the model
+        print("EVALUATION ON VALIDATION DATA")
+        print(f"The model is {accuracy * 100}% accurate")
+        print("Precision:", precision_score(y_test, y_pred))
+        print("Recall:", recall_score(y_test, y_pred))
+        print(classification_report(y_test, y_pred, target_names=['Non tumor', 'Tumor']))
+        print(confusion_matrix(y_test, y_pred))
+
+        end_time2 = time.time()
+        elapsed_time2 = end_time2 - start_time2
+        print(f"Elapsed time on {kernel}: ", elapsed_time2)
 def svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components) -> None:
     pca = PCA(n_components=n_components)
     pca.fit(x_train)
@@ -130,11 +162,13 @@ def svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_com
 
     kernels = ['linear', 'poly', 'rbf']
     for kernel in kernels:
+        start_time2 = time.time()
+
         from sklearn import svm
         print('----', kernel, '----')
         model = svm.SVC(kernel=kernel, max_iter=max_iteration)
         model.fit(trainData_pca, y_train)
-
+        '''
         y_pred = model.predict(valData_pca)
         # Calculating the accuracy of the model  ------- VALIDATION DATA
         accuracy = accuracy_score(y_pred, y_vallabels)
@@ -144,13 +178,30 @@ def svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_com
         print("Precision:", precision_score(y_vallabels, y_pred))
         print("Recall:", recall_score(y_vallabels, y_pred))
         print(classification_report(y_vallabels, y_pred, target_names=['Non tumor', 'Tumor']))
+        '''
+        y_pred = model.predict(testData_pca)
+        # Calculating the accuracy of the model  ------- VALIDATION DATA
+        accuracy = accuracy_score(y_pred, y_test)
+        # Print the accuracy of the model
+        print("EVALUATION ON VALIDATION DATA")
+        print(f"The model is {accuracy * 100}% accurate")
+        print("Precision:", precision_score(y_test, y_pred))
+        print("Recall:", recall_score(y_test, y_pred))
+        print(classification_report(y_test, y_pred, target_names=['Non tumor', 'Tumor']))
+        print(confusion_matrix(y_test, y_pred))
+
+        end_time2 = time.time()
+        elapsed_time2 = end_time2 - start_time2
+        print(f"Elapsed time on {kernel}: ", elapsed_time2)
 
 
 def pca(x_train,x_test, y_train, y_test, n_components) -> None:
     pca = PCA(n_components)  # Scegli il numero di componenti principali da visualizzare
     x_train_pca = pca.fit_transform(x_train)  # Applica la PCA ai dati di addestramento
     x_test_pca = pca.transform(x_test)  # Applica la PCA ai dati di test
-
+    print(x_train_pca.shape)
+    print(x_test_pca.shape)
+    '''
     # Plotta i dati di addestramento
     plt.figure(figsize=(10, 6))
     sns.scatterplot(x=x_train_pca[:, 0], y=x_train_pca[:, 1], hue=y_train, palette='Set1', s=100)
@@ -169,7 +220,7 @@ def pca(x_train,x_test, y_train, y_test, n_components) -> None:
     plt.legend(title='Class', labels=['Non tumor', 'Tumor'])
     plt.show()
 
-
+    '''
 if __name__ == '__main__':
 
     brain_tumor = pd.read_csv(f'dataset/Brain Tumor.csv')
@@ -191,9 +242,18 @@ if __name__ == '__main__':
     (x_train, x_valData, y_train, y_vallabels) = train_test_split(x_train, y_train,
                                                                     test_size=0.1, random_state=84)
 
+    # Start timer
+    start_time = time.time()
 
-    knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels)
+    #knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels)
     svm(x_train, x_test, y_train, y_test)
-    pca(x_train, x_valData, y_train, y_vallabels, n_components=100)
-    knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=2)
+    #pca(x_train, x_valData, y_train, y_vallabels, n_components=100)
+    #knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=2)
     svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=3)
+
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print("Elapsed time: ", elapsed_time)
+
+
+

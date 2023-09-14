@@ -9,4 +9,4 @@ output
 SVMGIGI.py
 NNGIGI.py
 model_weights_o.pth
-model_weights.pth
+model_weights_github.pth

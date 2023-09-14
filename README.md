@@ -89,101 +89,114 @@ EVALUATION ON TESTING DATA
 ---------------------------------------------------
 SVM
 ---------------------------------------------------
+EVALUATION ON TESTING DATA
 
 - Linear
 
-  - The model is 87.672% accurate
-  - Precision: 0.840
-  - Recall: 0.889
+  - The model is 75% accurate
+  - Precision: 0.693
+  - Recall: 0.785
               
                       precision   recall    f1-score   support
 
-        Non tumor       0.91      0.87      0.89       526
-        Tumor           0.84      0.89      0.86       415
+        Non tumor       0.81      0.73      0.77       526
+        Tumor           0.69      0.79      0.74       415
 
-        accuracy                            0.88       941
-        macro avg       0.87      0.88      0.88       941
-        weighted avg    0.88      0.88      0.88       941
+        accuracy                            0.75       941
+        macro avg       0.75      0.76      0.75       941
+        weighted avg    0.76      0.75      0.75       941
 
-- Poly 
-  - The model is 90.541% accurate
-  - Precision: 0.879
-  - Recall: 0.910
+  - Elapsed time on linear:  50.239 s
+
+- Polynomial 
+  - The model is 48.990% accurate
+  - Precision: 0.463
+  - Recall: 0.997
   
                       precision   recall    f1-score   support
 
-        Non tumor       0.93      0.90      0.91       526
-        Tumor           0.88      0.91      0.89       415
+        Non tumor       0.98      0.09      0.16       526
+        Tumor           0.46      1.00      0.63       415
 
-        accuracy                            0.91       941
-        macro avg       0.90      0.91      0.90       941
-        weighted avg    0.91      0.91      0.91       941
+        accuracy                            0.49       941
+        macro avg       0.72      0.54      0.40       941
+        weighted avg    0.75      0.49      0.37       941
+
+  - Elapsed time on polynomial:  56.108 s
 
 - RBF 
-  - The model is 90.435% accurate
-  - Precision: 0.901
-  - Recall: 0.879
+  - The model is 70.031 accurate
+  - Precision: 0.620
+  - Recall: 0.824
               
                       precision   recall    f1-score   support
 
-        Non tumor       0.91      0.92      0.92       526
-        Tumor           0.90      0.88      0.89       415
+        Non tumor       0.81      0.60      0.69       526
+        Tumor           0.62      0.82      0.71       415
 
-        accuracy                            0.90       941
-        macro avg       0.90      0.90      0.90       941
-        weighted avg    0.90      0.90      0.90       941
+        accuracy                            0.70       941
+        macro avg       0.72      0.71      0.70       941
+        weighted avg    0.73      0.70      0.70       941
+
+  - Elapsed time on RBF:  60.251 s
 
 ---------------------------------------------------
 SVM + PCA
 ---------------------------------------------------
 number of components for PCA = 3
 
-- EVALUATION ON VALIDATION DATA
+- EVALUATION ON TESTING DATA
+- 
 - Linear 
 
-  - The model is 36.749% accurate
-  - Precision: 0.339
-  - Recall: 0.4
+  - The model is 50.903% accurate
+  - Precision: 0.445
+  - Recall: 0.465
   
                      precision    recall    f1-score   support
 
-        Non tumor       0.40      0.34      0.37       153
-        Tumor           0.34      0.40      0.37       130
+        Non tumor       0.56      0.54      0.55       526
+        Tumor           0.45      0.47      0.46       415
 
-        accuracy                            0.37       283
-        macro avg       0.37      0.37      0.37       283
-        weighted avg    0.37      0.37      0.37       283
+        accuracy                            0.51       941
+        macro avg       0.50      0.50      0.50       941
+        weighted avg    0.51      0.51      0.51       941
+
+  - Elapsed time on linear:  0.07 s
 
 - Poly 
 
-  - The model is 75.971% accurate
-  - Precision: 0.684
-  - Recall: 0.884
+  - The model is 80.871% accurate
+  - Precision: 0.723
+  - Recall: 0.915
   
                    precision    recall    f1-score   support
 
-        Non tumor     0.87      0.65      0.75       153
-        Tumor         0.68      0.88      0.77       130
+        Non tumor     0.92      0.72      0.81       526
+        Tumor         0.72      0.92      0.81       415
 
-        accuracy                          0.76       283
-        macro avg     0.78      0.77      0.76       283
-        weighted avg  0.78      0.76      0.76       283
+        accuracy                          0.81       941
+        macro avg     0.82      0.82      0.81       941
+        weighted avg  0.83      0.81      0.81       941
+  
+  - Elapsed time on poly:  0.073 s
+
 
 - RBF
-  - The model is 84.452% accurate
-  - Precision: 0.830
-  - Recall: 0.830
+  - The model is 87.353% accurate
+  - Precision: 0.854
+  - Recall: 0.860
   
                    precision    recall    f1-score   support
 
-        Non tumor     0.86      0.86      0.86       153
-        Tumor         0.83      0.83      0.83       130
+        Non tumor     0.89      0.88      0.89       526
+        Tumor         0.85      0.86      0.86       415
 
-        accuracy                          0.84       283
-        macro avg     0.84      0.84      0.84       283
-        weighted avg  0.84      0.84      0.84       283
+        accuracy                          0.87       941
+        macro avg     0.87      0.87      0.87       941
+        weighted avg  0.87      0.87      0.87       941
 
-
+  - Elapsed time on rbf:  0.076 s
 ---------------------------------------------------
 CNN
 ---------------------------------------------------
