@@ -145,8 +145,8 @@ SVM + PCA
 ---------------------------------------------------
 number of components for PCA = 3
 
-- EVALUATION ON TESTING DATA
-- 
+EVALUATION ON TESTING DATA
+ 
 - Linear 
 
   - The model is 50.903% accurate
