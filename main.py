@@ -245,11 +245,11 @@ if __name__ == '__main__':
     # Start timer
     start_time = time.time()
 
-    #knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels)
+    knn(x_train, x_test, x_valData, y_train, y_test, y_vallabels)
     svm(x_train, x_test, y_train, y_test)
-    #pca(x_train, x_valData, y_train, y_vallabels, n_components=100)
-    #knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=2)
-    svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=3)
+    pca(x_train, x_valData, y_train, y_vallabels, n_components=100)
+    knn_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=2)
+    svm_with_pca(x_train, x_test, x_valData, y_train, y_test, y_vallabels, n_components=100)
 
     end_time = time.time()
     elapsed_time = end_time - start_time
